@@ -1,0 +1,33 @@
+plugins {
+  id 'java'
+}
+
+java {
+  toolchain {
+    languageVersion = JavaLanguageVersion.of(23) // Ställ in till din Java-version
+  }
+}
+
+repositories {
+  mavenCentral() // Använd Maven Central för att hämta beroenden
+}
+
+dependencies {
+  // LibGDX bibliotek
+  api "com.badlogicgames.gdx:gdx:$gdxVersion"
+
+  // Om Graal Native används
+  if (enableGraalNative == 'true') {
+    implementation "io.github.berstanio:gdx-svmhelper-annotations:$graalHelperVersion"
+  }
+
+  // Gson-bibliotek
+  implementation 'com.google.code.gson:gson:2.8.9'
+}
+
+// Ställ in UTF-8 som standard encoding
+tasks.withType(JavaCompile) {
+  options.encoding = 'UTF-8'
+}
+
+eclipse.project.name = appName + '-core'
